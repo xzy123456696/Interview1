@@ -1,0 +1,33 @@
+class Solution
+{
+public:
+    int findMinMax(vector<int> nums)
+    {
+        int h = 0;
+        int empty = 0;
+        for (int w = 0; w < nums.size(); ++w)
+        {
+            if (empty > nums[w])
+            {
+                empty -= nums[w];
+                empty += h;
+            }
+            else
+            {
+                nums[w] -= empty;
+                empty = 0;
+                if (nums[w] > h)
+                {
+                    int inc = ceil((double)(nums[w] - h) / (w + 1));
+                    empty = inc * (w + 1) - (nums[w] - h);
+                    h += inc;
+                }
+                else
+                {
+                    empty = h - nums[w];
+                }
+            }
+        }
+        return h;
+    }
+};
